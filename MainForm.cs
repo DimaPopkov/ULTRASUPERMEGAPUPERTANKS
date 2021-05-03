@@ -15,6 +15,10 @@ namespace Tanks
         public MainForm()
         {
             InitializeComponent();
+            tankPower.Add("Танк Гротте", 250);
+            tankPower.Add("Армата", 1500);
+            tankPower.Add("КВ-85", 600);
+            tankPower.Add("Т-54Б", 520);
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -39,6 +43,38 @@ namespace Tanks
             pictureBox3.BackColor = Color.Transparent;
             pictureBox4.BackColor = Color.Gray;
             label3.Text = "Стоимость: 1600000";
+        }
+
+        Dictionary<string, int> tankPower = new Dictionary<string, int>();
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string tank = comboBox1.Text;
+
+            try
+            {
+                label2.Text = "Мощность " + tankPower[tank] + " л.с.";
+            }
+            catch (Exception)
+            {
+
+            }
+
+            try
+            {
+                pictureBox1.Load("../../Pictures/Tanks/" + tank + ".png");
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    pictureBox1.Load("../../Pictures/Tanks/" + tank + ".jpg");
+                }
+                catch (Exception)
+                {
+
+                }
+            }
         }
     }
 }

@@ -12,37 +12,51 @@ namespace Tanks
 {
     public partial class MainForm : Form
     {
-        Dictionary<string, Tank> tanks = new Dictionary<string, Tank>();
+        /// <summary>
+        /// Все танки
+        /// </summary>
+        readonly Dictionary<string, Tank> Tanks = new Dictionary<string, Tank>();
 
         public MainForm()
         {
             InitializeComponent();
-
-            tankPower.Add("Танк Гротте", 250);
-            tankPower.Add("Армата", 1500);
-            tankPower.Add("КВ-85", 600);
-            tankPower.Add("Т-54Б", 520);
 
             Tank tank1 = new Tank
             {
                 Name = "Армата",
                 Power = 1500,
                 Price = 1200000,
-                Picture = Image.FromFile("../../Pictures/Tanks/Armata.png")
+                Picture = Image.FromFile("../../Pictures/Tanks/Армата.png")
             };
             Tank tank2 = new Tank
             {
                 Name = "Т-54Б",
-                Power = 100,
+                Power = 520,
                 Price = 100000,
-                Picture = Image.FromFile("../../Pictures/Tanks/T-54B.png")
+                Picture = Image.FromFile("../../Pictures/Tanks/Т-54Б.png")
+            };
+            Tank tank3 = new Tank
+            {
+                Name = "Танк Гротте",
+                Power = 250,
+                Price = 100000,
+                Picture = Image.FromFile("../../Pictures/Tanks/Танк Гротте.jpg")
+            };
+            Tank tank4 = new Tank
+            {
+                Name = "КВ-85",
+                Power = 600,
+                Price = 100000,
+                Picture = Image.FromFile("../../Pictures/Tanks/КВ-85.jpg")
             };
 
-            tanks.Add(tank1.Name, tank1);
-            tanks.Add(tank2.Name, tank2);
+            Tanks.Add(tank1.Name, tank1);
+            Tanks.Add(tank2.Name, tank2);
+            Tanks.Add(tank3.Name, tank3);
+            Tanks.Add(tank4.Name, tank4);
 
             comboBox1.Items.Clear();
-            foreach (var tank in tanks)
+            foreach (var tank in Tanks)
                 comboBox1.Items.Add(tank.Key);
         }
 
@@ -69,45 +83,13 @@ namespace Tanks
             pictureBox4.BackColor = Color.Gray;
             label3.Text = "Стоимость: 1600000";
         }
-
-        Dictionary<string, int> tankPower = new Dictionary<string, int>();
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string tank = comboBox1.Text;
-
-            try
-            {
-                label2.Text = "Мощность " + tankPower[tank] + " л.с.";
-            }
-            catch (Exception)
-            {
-
-            }
-
-            try
-            {
-                pictureBox1.Load("../../Pictures/Tanks/" + tank + ".png");
-            }
-            catch (Exception)
-            {
-                try
-                {
-                    pictureBox1.Load("../../Pictures/Tanks/" + tank + ".jpg");
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-        }
-
+                
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (comboBox1.Text == "")
                 return;
 
-            Tank currentTank = tanks[comboBox1.Text];
+            Tank currentTank = Tanks[comboBox1.Text];
             pictureBox1.Image = currentTank.Picture;
             label3.Text = "Стоимость: " + currentTank.Price.ToString() + " рублей";
             label2.Text = "Мощность: " + currentTank.Power.ToString() + " л.с.";

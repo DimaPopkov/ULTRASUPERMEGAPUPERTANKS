@@ -7,31 +7,28 @@ using System.Threading.Tasks;
 
 namespace Tanks
 {
-    public class Tank
+    /// <summary>
+    /// Башня
+    /// </summary>
+    public class Tower
     {
         /// <summary>
-        /// Название модели
+        /// Название
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Фото
+        /// Картинка
         /// </summary>
         public Image Picture { get; set; }
-
-        /// <summary>
-        /// Мощность
-        /// </summary>
-        public int Power { get; set; }
 
         /// <summary>
         /// Стоимость
         /// </summary>
         public int Price { get; set; }
-
         /// <summary>
-        /// Башня
+        /// Масса
         /// </summary>
-        public Tower TankTower { get; set; }
+        public int Mass { get; set; }
     }
 }

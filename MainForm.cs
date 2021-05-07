@@ -16,10 +16,31 @@ namespace Tanks
         /// Все танки
         /// </summary>
         readonly Dictionary<string, Tank> Tanks = new Dictionary<string, Tank>();
+        
+        /// <summary>
+        /// Все башни
+        /// </summary>
+        readonly Dictionary<string, Tower> Towers = new Dictionary<string, Tower>();
 
         public MainForm()
         {
             InitializeComponent();
+
+            Tower tower1 = new Tower
+            {
+                Name = "Башня1",
+                Picture = Image.FromFile("../../Pictures/Towers/Тигр.jpg"),
+                Price = 10000
+            };
+            Tower tower2 = new Tower
+            {
+                Name = "Башня2",
+                Picture = Image.FromFile("../../Pictures/Towers/Тигр.jpg"),
+                Price = 15000
+            };
+
+            Towers.Add(tower1.Name, tower1);
+            Towers.Add(tower2.Name, tower2);
 
             Tank tank1 = new Tank
             {
@@ -58,40 +79,47 @@ namespace Tanks
             comboBox1.Items.Clear();
             foreach (var tank in Tanks)
                 comboBox1.Items.Add(tank.Key);
+
+
+            int n = 0;
+            tabPage2.Controls.Clear();
+            foreach (var tower in Towers)
+            {
+                PictureBox pb = new PictureBox();
+                pb.Tag = tower.Key;
+                pb.Location = new Point(10 + n * 120, 10);
+                pb.Size = new Size(100, 100);
+                pb.SizeMode = PictureBoxSizeMode.Zoom;
+                pb.Image = tower.Value.Picture;
+                pb.Click += new EventHandler(TowerClick);
+                tabPage2.Controls.Add(pb);
+
+                n = n + 1;
+            }
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void TowerClick(object sender, EventArgs e)
         {
-            pictureBox2.BackColor = Color.Gray;
-            pictureBox3.BackColor = Color.Transparent;
-            pictureBox4.BackColor = Color.Transparent;
-            label3.Text = "Стоимость: 1200000";
-        }
+            foreach (Control ctrl in tabPage2.Controls)
+                ctrl.BackColor = Color.Transparent;
 
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox3.BackColor = Color.Gray;
-            pictureBox4.BackColor = Color.Transparent;
-            label3.Text = "Стоимость: 1400000";
+            PictureBox pb = (PictureBox)sender;
+            pb.BackColor = Color.Gray;
+            Tanks[comboBox1.Text].TankTower = Towers[pb.Tag.ToString()];
         }
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-            pictureBox2.BackColor = Color.Transparent;
-            pictureBox3.BackColor = Color.Transparent;
-            pictureBox4.BackColor = Color.Gray;
-            label3.Text = "Стоимость: 1600000";
-        }
-                
-        private void timer1_Tick(object sender, EventArgs e)
+        
+        private void TimerTick(object sender, EventArgs e)
         {
             if (comboBox1.Text == "")
                 return;
 
             Tank currentTank = Tanks[comboBox1.Text];
             pictureBox1.Image = currentTank.Picture;
-            label3.Text = "Стоимость: " + currentTank.Price.ToString() + " рублей";
+            int Price = currentTank.Price;
+            if (currentTank.TankTower != null)
+                Price += currentTank.TankTower.Price;
+
+            label3.Text = "Стоимость: " + Price.ToString() + " рублей";
             label2.Text = "Мощность: " + currentTank.Power.ToString() + " л.с.";
         }
     }

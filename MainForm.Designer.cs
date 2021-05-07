@@ -72,12 +72,15 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Армата",
-            "Т-54Б"});
+            "КВ-85",
+            "Т-54Б",
+            "Танк Гротте"});
             this.comboBox1.Location = new System.Drawing.Point(23, 71);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(5);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(371, 37);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 

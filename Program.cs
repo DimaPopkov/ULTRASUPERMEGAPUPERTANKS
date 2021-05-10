@@ -16,7 +16,9 @@ namespace Tanks
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            SQLClass.OpenConnection();
             Application.Run(new MainForm());
+            SQLClass.CloseConnection();
         }
     }
 }

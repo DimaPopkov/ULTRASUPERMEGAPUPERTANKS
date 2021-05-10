@@ -26,6 +26,23 @@ namespace Tanks
         {
             InitializeComponent();
 
+            //Модели танков из БД
+            List<string> tan = SQLClass.Select("SELECT Name, Power, Price FROM tanks ORDER BY id");
+            List<Image> pics = SQLClass.SelectImages("SELECT Picture FROM tanks ORDER BY id");
+
+            for (int i = 0; i < pics.Count; i++)
+            {
+                Tank tank = new Tank
+                {
+                    Name = tan[3*i],
+                    Power = Convert.ToInt32(tan[3 * i + 1]),
+                    Price = Convert.ToInt32(tan[3 * i + 2]),
+                    Picture = pics[i]
+                };
+
+                Tanks.Add(tank.Name, tank);
+            }
+
             Tower tower1 = new Tower
             {
                 Name = "Башня1",
@@ -42,39 +59,6 @@ namespace Tanks
             Towers.Add(tower1.Name, tower1);
             Towers.Add(tower2.Name, tower2);
 
-            Tank tank1 = new Tank
-            {
-                Name = "Армата",
-                Power = 1500,
-                Price = 1200000,
-                Picture = Image.FromFile("../../Pictures/Tanks/Армата.png")
-            };
-            Tank tank2 = new Tank
-            {
-                Name = "Т-54Б",
-                Power = 520,
-                Price = 100000,
-                Picture = Image.FromFile("../../Pictures/Tanks/Т-54Б.png")
-            };
-            Tank tank3 = new Tank
-            {
-                Name = "Танк Гротте",
-                Power = 250,
-                Price = 100000,
-                Picture = Image.FromFile("../../Pictures/Tanks/Танк Гротте.jpg")
-            };
-            Tank tank4 = new Tank
-            {
-                Name = "КВ-85",
-                Power = 600,
-                Price = 100000,
-                Picture = Image.FromFile("../../Pictures/Tanks/КВ-85.jpg")
-            };
-
-            Tanks.Add(tank1.Name, tank1);
-            Tanks.Add(tank2.Name, tank2);
-            Tanks.Add(tank3.Name, tank3);
-            Tanks.Add(tank4.Name, tank4);
 
             comboBox1.Items.Clear();
             foreach (var tank in Tanks)
@@ -82,7 +66,7 @@ namespace Tanks
 
 
             int n = 0;
-            tabPage2.Controls.Clear();
+            towerTabPage.Controls.Clear();
             foreach (var tower in Towers)
             {
                 PictureBox pb = new PictureBox();
@@ -92,7 +76,7 @@ namespace Tanks
                 pb.SizeMode = PictureBoxSizeMode.Zoom;
                 pb.Image = tower.Value.Picture;
                 pb.Click += new EventHandler(TowerClick);
-                tabPage2.Controls.Add(pb);
+                towerTabPage.Controls.Add(pb);
 
                 n = n + 1;
             }
@@ -100,9 +84,11 @@ namespace Tanks
 
         private void TowerClick(object sender, EventArgs e)
         {
-            foreach (Control ctrl in tabPage2.Controls)
+            //Все невыделено
+            foreach (Control ctrl in towerTabPage.Controls)
                 ctrl.BackColor = Color.Transparent;
 
+            //Нужную башню выделяю
             PictureBox pb = (PictureBox)sender;
             pb.BackColor = Color.Gray;
             Tanks[comboBox1.Text].TankTower = Towers[pb.Tag.ToString()];
@@ -115,6 +101,7 @@ namespace Tanks
 
             Tank currentTank = Tanks[comboBox1.Text];
             pictureBox1.Image = currentTank.Picture;
+            
             int Price = currentTank.Price;
             if (currentTank.TankTower != null)
                 Price += currentTank.TankTower.Price;

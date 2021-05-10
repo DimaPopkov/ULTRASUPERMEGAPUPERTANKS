@@ -38,7 +38,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.towerTabPage = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -118,7 +118,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.towerTabPage);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
@@ -138,15 +138,15 @@
             this.tabPage1.Text = "Двигатель";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // towerTabPage
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 38);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(377, 186);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Башня";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.towerTabPage.Location = new System.Drawing.Point(4, 38);
+            this.towerTabPage.Name = "towerTabPage";
+            this.towerTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.towerTabPage.Size = new System.Drawing.Size(377, 186);
+            this.towerTabPage.TabIndex = 1;
+            this.towerTabPage.Text = "Башня";
+            this.towerTabPage.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
@@ -212,7 +212,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage towerTabPage;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TabPage tabPage4;

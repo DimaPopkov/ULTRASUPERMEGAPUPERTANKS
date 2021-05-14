@@ -34,7 +34,7 @@ namespace Tanks
             {
                 Tank tank = new Tank
                 {
-                    Name = tan[3*i],
+                    Name = tan[3 * i],
                     Power = Convert.ToInt32(tan[3 * i + 1]),
                     Price = Convert.ToInt32(tan[3 * i + 2]),
                     Picture = pics[i]
@@ -43,28 +43,29 @@ namespace Tanks
                 Tanks.Add(tank.Name, tank);
             }
 
-            Tower tower1 = new Tower
+            //Модели башен из БД
+            List<string> towers = SQLClass.Select("SELECT Name, Price FROM towers ORDER BY id");
+            pics = SQLClass.SelectImages("SELECT Picture FROM towers ORDER BY id");
+
+            for (int i = 0; i < pics.Count; i++)
             {
-                Name = "Башня1",
-                Picture = Image.FromFile("../../Pictures/Towers/Тигр.jpg"),
-                Price = 10000
-            };
-            Tower tower2 = new Tower
-            {
-                Name = "Башня2",
-                Picture = Image.FromFile("../../Pictures/Towers/Тигр.jpg"),
-                Price = 15000
-            };
+                Tower tower = new Tower
+                {
+                    Name = towers[2 * i],
+                    Price = Convert.ToInt32(towers[2 * i + 1]),
+                    Picture = pics[i]
+                };
 
-            Towers.Add(tower1.Name, tower1);
-            Towers.Add(tower2.Name, tower2);
+                Towers.Add(tower.Name, tower);
+            }
 
-
+            //Добавление моделей танков на форму
             comboBox1.Items.Clear();
             foreach (var tank in Tanks)
                 comboBox1.Items.Add(tank.Key);
 
 
+            //Добавление моделей башен на форму
             int n = 0;
             towerTabPage.Controls.Clear();
             foreach (var tower in Towers)
@@ -76,6 +77,7 @@ namespace Tanks
                 pb.SizeMode = PictureBoxSizeMode.Zoom;
                 pb.Image = tower.Value.Picture;
                 pb.Click += new EventHandler(TowerClick);
+                toolTip1.SetToolTip(pb, tower.Value.Name);
                 towerTabPage.Controls.Add(pb);
 
                 n = n + 1;
@@ -84,6 +86,9 @@ namespace Tanks
 
         private void TowerClick(object sender, EventArgs e)
         {
+            if (comboBox1.Text == "")
+                return;
+
             //Все невыделено
             foreach (Control ctrl in towerTabPage.Controls)
                 ctrl.BackColor = Color.Transparent;
